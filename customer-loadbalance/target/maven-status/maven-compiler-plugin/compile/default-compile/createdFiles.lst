@@ -1,0 +1,6 @@
+com\ktb\demo\customerloadbalance\CustomerLoadbalanceApplication.class
+com\ktb\demo\customerloadbalance\ReservationApiGatewayRestController.class
+com\ktb\demo\customerloadbalance\HystrixClientFallbackFactory$1.class
+com\ktb\demo\customerloadbalance\HystrixClientFallback.class
+com\ktb\demo\customerloadbalance\CustomerService.class
+com\ktb\demo\customerloadbalance\HystrixClientFallbackFactory.class

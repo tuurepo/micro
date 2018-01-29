@@ -1,0 +1,14 @@
+FROM java:8
+EXPOSE 8022
+
+COPY . /opt/customer-server/
+WORKDIR /opt/customer-server/
+
+VOLUME /logs
+WORKDIR /
+
+ENTRYPOINT ["java", "-jar",\
+            "/opt/customer-server/target/customer-service-0.0.1-SNAPSHOT.jar",\
+            "--server.port=8022",\
+			"-Dspring.profiles.active=container",\
+            "--spring.config.name=customer-service2"]

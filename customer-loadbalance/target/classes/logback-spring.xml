@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/base.xml"/>
+	<springProperty scope="context" name="springAppName" source="spring.application.name" />
+
+	<property name="filename" value="/logs/customer-loadbalance.log" />
+	<property name="defaultpattern" value="%d{yyyy-MM-dd HH:mm:ss}|${springAppName}|%X{X-B3-TraceId:-}|%X{X-B3-SpanId:-}|%X{X-B3-ParentSpanId:-}|%X{X-Span-Export:-}|${PID:-}|%thread|%X{RemoteAddress}|%-5p|%c{1}.%M,%L|%m%n" />
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${filename}</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>
+				${defaultpattern}
+			</Pattern>
+		</encoder>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>/logs/archived/customer-loadbalance.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+	
+	<springProfile name="container">
+		<appender name="STASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
+			<destination>logstash:5000</destination>
+			<encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+		</appender>
+    </springProfile>
+	<springProfile name="dev">
+		<appender name="STASH" class="net.logstash.logback.appender.LogstashAccessTcpSocketAppender">
+			<destination>localhost:5000</destination>
+			<encoder class="net.logstash.logback.encoder.LogstashEncoder" />
+		</appender>
+    </springProfile>
+
+	<logger name="CustomerLoadBalance" level="debug" additivity="false">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STASH" />
+	</logger>
+
+</configuration>
