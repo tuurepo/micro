@@ -15,6 +15,7 @@ import org.springframework.cloud.sleuth.sampler.AlwaysSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -50,18 +51,11 @@ class ReservationApiGatewayRestController{
 	@Autowired
 	private CustomerService customerService;
 	
-	@RequestMapping(method=RequestMethod.GET, value="/message")
-	public String getMessage(){
-		logger.debug("This is loadbalancer [api /message]");
-		String response = customerService.message();
+	@RequestMapping(method=RequestMethod.GET, value="/{apimethod}")
+	public String getMessage(@PathVariable String apimethod){
+		logger.debug("This is loadbalancer [api /"+apimethod+"]");
+		String response = customerService.apimethod(apimethod);
 		return "Load Balance Port: "+port+" call customer response: "+response;
-	}
-	
-	@RequestMapping(method=RequestMethod.GET, value="/randomerror")
-	public String randomError(){
-		logger.debug("This is loadbalancer [api /randomerror]");
-		String response = customerService.randomError();
-		return response;
 	}
 	
 }
@@ -69,11 +63,9 @@ class ReservationApiGatewayRestController{
 @FeignClient(name = "customer-service", fallbackFactory = HystrixClientFallbackFactory.class)
 interface CustomerService{
 	
-	@RequestMapping(value = "/message", method = RequestMethod.GET)
-	String message();
+	@RequestMapping(value = "/{apimethod}", method = RequestMethod.GET)
+	String apimethod(@PathVariable("apimethod") String apimethod);
 	
-	@RequestMapping(value = "/randomerror", method = RequestMethod.GET)
-	String randomError();
 }
 
 @Component
@@ -81,16 +73,11 @@ class HystrixClientFallback implements CustomerService {
 	
 	private static final Logger logger = LoggerFactory.getLogger("CustomerLoadBalance");
     @Override
-	public String message(){
-    	logger.error("LoadBalance [Message]: Hystrix CircuitBreaker");
-		return "LoadBalance [Message]: Hystrix CircuitBreaker";
+	public String apimethod(@PathVariable("apimethod") String apimethod){
+    	logger.error("LoadBalance ["+apimethod+"]: Hystrix CircuitBreaker");
+		return "LoadBalance ["+apimethod+"]: Hystrix CircuitBreaker";
     }
     
-	@Override
-	public String randomError() {
-		logger.error("LoadBalance [RandomError]: Hystrix CircuitBreaker");
-		return "LoadBalance [RandomError]: Hystrix CircuitBreaker";
-	}
 }
 
 
@@ -104,16 +91,10 @@ class HystrixClientFallbackFactory implements FallbackFactory<CustomerService> {
 		return new CustomerService() {
 
 			@Override
-			public String message(){
-		    	logger.error("LoadBalance [Message]: Hystrix CircuitBreaker", cause);
-				return "LoadBalance [Message]: Hystrix CircuitBreaker";
+			public String apimethod(@PathVariable("apimethod") String apimethod){
+		    	logger.error("LoadBalance ["+apimethod+"]: Hystrix CircuitBreaker", cause);
+				return "LoadBalance ["+apimethod+"]: Hystrix CircuitBreaker";
 		    }
-		    
-			@Override
-			public String randomError() {
-				logger.error("LoadBalance [RandomError]: Hystrix CircuitBreaker", cause);
-				return "LoadBalance [RandomError]: Hystrix CircuitBreaker";
-			}
 		};
 	}
 }
