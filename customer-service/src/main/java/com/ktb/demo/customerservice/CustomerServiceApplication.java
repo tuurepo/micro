@@ -64,6 +64,13 @@ class CustomerServiceRestController {
 		return msg;
 	}
 	
+	@RequestMapping("/CTM100-001")
+	public String ctm100_001(){
+		String msg = "This is Customer service [port:"+this.port+"] \r\n [CTM100-001]\r\n Count="+String.valueOf(++COUNT);
+		logger.debug(msg);
+		return msg;
+	}
+	
 	private int randomPercent() {
 		Random r = new Random();
 	    return r.nextInt(100);

@@ -28,12 +28,10 @@ spring:
 spring:
   profiles: dev
   rabbitmq:
-    host: localhost
-    username: rabbitmq
-    password: rabbitmq
+    host: 192.168.99.100
     port: 5672
   cloud:
     config:
       server:
         git:
-          uri: D:\\Google Drive\\Microservices\\Presentation_Workspace\\git\\config
+          uri: D:\\Source\\Microservice\\SIT\\workspace\\micro\\git\\config

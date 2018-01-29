@@ -1,10 +1,10 @@
 management:
     security:
         enabled: false
-spring:
-    sleuth:
-        sampler:
-            percentage: 1.0
+#spring:
+#    sleuth:
+#        sampler:
+#            percentage: 1.0
     rabbitmq:
 #        host: localhost
         host: 192.168.99.100
@@ -17,7 +17,7 @@ endpoints:
 ribbon:
     eureka:
         enabled: true
-    ConnectTimeout: 3000
+    ConnectTimeout: 10000
     ReadTimeout: 50000
 hystrix:
     command:  
