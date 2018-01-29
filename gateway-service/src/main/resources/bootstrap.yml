@@ -1,0 +1,17 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: gateway-service
+---
+spring:
+  profiles: container
+  cloud:
+    config:
+      uri: http://config-server:8888
+---
+spring:
+  profiles: dev
+  cloud:
+    config:
+      uri: http://localhost:8888
