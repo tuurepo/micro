@@ -6,7 +6,8 @@ spring:
         sampler:
             percentage: 1.0
     rabbitmq:
-        host: localhost
+#        host: localhost
+        host: 192.168.99.100
 #        username: rabbitmq
 #        password: rabbitmq
         port: 5672
