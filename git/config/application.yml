@@ -7,8 +7,8 @@ spring:
             percentage: 1.0
     rabbitmq:
         host: localhost
-        username: rabbitmq
-        password: rabbitmq
+#        username: rabbitmq
+#        password: rabbitmq
         port: 5672
 endpoints:
     shutdown:
