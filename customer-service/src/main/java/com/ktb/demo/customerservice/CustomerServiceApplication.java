@@ -47,7 +47,7 @@ class CustomerServiceRestController {
 	
 	@RequestMapping("/message")
 	public String getMessage(){
-		String msg = "This is Customer service [port:"+this.port+"] \r\n message="+this.message + "\r\n Count="+String.valueOf(++COUNT);
+		String msg = "@This is Customer service [port:"+this.port+"] \r\n message="+this.message + "\r\n Count="+String.valueOf(++COUNT);
 		logger.debug(msg);
 		return msg;
 	}
