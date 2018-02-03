@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: eureka-server
+security:
+  basic:
+    enabled: true  
 ---
 spring:
   profiles: container

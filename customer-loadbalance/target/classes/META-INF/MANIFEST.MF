@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: customer-loadbalance
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: KTBUser
+Built-By: USER
 Implementation-Vendor-Id: com.ktb.demo
 Build-Jdk: 1.8.0_151
 Implementation-URL: http://projects.spring.io/spring-boot/customer-loa

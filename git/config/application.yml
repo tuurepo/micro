@@ -1,15 +1,17 @@
 management:
     security:
         enabled: false
-#spring:
+spring:
 #    sleuth:
 #        sampler:
 #            percentage: 1.0
+    zipkin:
+        base-url: http://localhost:9400
     rabbitmq:
-#        host: localhost
-        host: 192.168.99.100
-#        username: rabbitmq
-#        password: rabbitmq
+        host: localhost
+#        host: 192.168.99.100
+        username: rabbitmq
+        password: rabbitmq
         port: 5672
 endpoints:
     shutdown:
@@ -36,9 +38,8 @@ eureka:
     client: 
         serviceUrl:
 #       defaultZone: http://localhost:8761/eureka,http://localhost:8762/eureka
-            defaultZone: http://localhost:8761/eureka
+            defaultZone: http://myuser:mypassword123@localhost:8761/eureka
     healthcheck:
         enabled: true
-    zipkin:
-        base-url: http://localhost:9400
+
     

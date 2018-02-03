@@ -15,6 +15,8 @@ import org.springframework.integration.annotation.IntegrationComponentScan;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.netflix.client.ClientException;
+
 
 @IntegrationComponentScan
 @EnableDiscoveryClient
@@ -53,13 +55,13 @@ class CustomerServiceRestController {
 	}
 	
 	@RequestMapping("/randomerror")
-	public String getRandomError(){
+	public String getRandomError() throws ClientException{
 		int randomPercent = randomPercent();
 		String msg = "This is Customer service [port:"+this.port+"] \r\n random error :: randomPercent="+randomPercent;
 		logger.debug(msg);
 		if(randomPercent < 50) {
 			logger.error("Random error < 50");
-			throw new RuntimeException();
+			throw new ClientException("randomPercent="+randomPercent);
 		}
 		return msg;
 	}
