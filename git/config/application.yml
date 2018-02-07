@@ -11,7 +11,7 @@ spring:
         host: localhost
 #        host: 192.168.99.100
         username: rabbitmq
-        password: rabbitmq
+        password: '{cipher}0737ffba43534284fbfb0e00141ba878e3e4f7aa2360dc7c991d83b55ca90c16'
         port: 5672
 endpoints:
     shutdown:

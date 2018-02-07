@@ -36,4 +36,9 @@ spring:
     config:
       server:
         git:
-          uri: D:\\works\\git\\micro\\git\\config
+          uri: D:\\Work\\KTB\Workspaces\\MicroServiceWorkspace_New\\git\\config
+        encrypt:
+          enabled: false
+---
+encrypt:
+  key: ABCDEFGHIJKLMNOPQRSTUVWXYZ
